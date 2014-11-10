@@ -1,0 +1,40 @@
+whisper:
+    image: nacyot/whisper
+
+elasticsearch:
+    image: dockerfile/elasticsearch
+    ports:
+        - 9200:9200
+
+carbon:
+    build: carbon-cache
+    volumes_from:
+        - whisper
+
+graphite:
+    image: nacyot/graphite-api
+    ports:
+        - 8081:80
+    volumes_from:
+        - whisper
+
+octostats:
+    build: octostats
+    command: --repository=docker/docker --token-file=/.gittoken
+    links:
+        - carbon
+    volumes:
+        - $HOME/.gittoken:/.gittoken
+
+grafana:
+    build: grafana
+    environment:
+        - ES_API_HOST=127.0.1
+        - ES_API_PORT=9200
+        - GRAPHITE_API_HOST=127.0.0.1
+        - GRAPHITE_API_PORT=8081
+    links:
+        - elasticsearch
+        - graphite
+    ports:
+        - 8080:8000

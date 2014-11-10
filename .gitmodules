@@ -1,0 +1,3 @@
+[submodule "octostats"]
+	path = octostats
+	url = https://github.com/icecrime/octostats
