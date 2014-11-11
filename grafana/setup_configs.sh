@@ -1,8 +1,6 @@
 #!/bin/bash
 
-[ -f /opt/grafana/src/config ] && cp /opt/grafana/src/config/config.js /opt/grafana/src/config.js
+[ -f /opt/grafana/config ] && cp /opt/grafana/config/config.js /opt/grafana/config.js
 
-sed -i -e "s/ES_API_HOST/${ES_API_HOST}/g" ./src/config.js
-sed -i -e "s/ES_API_PORT/${ES_API_PORT}/g" ./src/config.js
-sed -i -e "s/GRAPHITE_API_HOST/${GRAPHITE_API_HOST}/g" ./src/config.js
-sed -i -e "s/GRAPHITE_API_PORT/${GRAPHITE_API_PORT}/g" ./src/config.js
+sed -i -e "s/INFLUXDB_HOST/${INFLUX_PORT_8086_TCP_ADDR}/g" ./config.js
+sed -i -e "s/INFLUXDB_PORT/${INFLUX_PORT_8086_TCP_PORT}/g" ./config.js

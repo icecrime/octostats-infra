@@ -1,23 +1,22 @@
 define(['settings'],
        function (Settings) {
            "use strict";
-           
+
            return new Settings({
-               elasticsearch: "http://ES_API_HOST:ES_API_PORT",
                datasources: {
-                 graphite: {
-                   type: 'graphite',
-                   url: 'http://GRAPHITE_API_HOST:GRAPHITE_API_PORT',
-                   default: true,
-                   render_method: 'GET'
+                 metrics: {
+                   type: 'influxdb',
+                   url: 'http://INFLUXDB_HOST:INFLUXDB_PORT/db/github',
+                   username: 'root',
+                   password: 'root'
+                 },
+                 grafana: {
+                   type: 'influxdb',
+                   url: 'http://INFLUXDB_HOST:INFLUXDB_PORT/db/grafana',
+                   username: 'root',
+                   password: 'root',
+                   grafanaDB: true
                  }
-               },
-               default_route: '/dashboard/file/default.json',
-               timezoneOffset: null,
-               grafana_index: "grafana-dash",
-               panel_names: [
-                   'text',
-                   'graphite'
-               ]
+               }
            });
        });
